@@ -1,0 +1,139 @@
+autocmd!
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Let vundle manage itself
+Plugin 'gmarik/Vundle.vim'
+
+"Add ze Plugins!
+Plugin 'scrooloose/syntastic'
+
+Plugin 'vim-scripts/xoria256.vim'
+Plugin 'altercation/vim-colors-solarized'
+
+call vundle#end()
+
+" enable highlighting and filetype detection
+syntax on
+filetype plugin indent on
+
+" Vim cwd hacks
+set suffixesadd=.jsx,.js
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" STANDARD EDITING SETTINGS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" allow hidden modified buffers
+set hidden
+
+" general settings
+set scrolloff=3
+" highlight current line
+set cursorline
+set switchbuf=useopen
+set listchars=tab:â\ ,trail:.
+set backspace=indent,eol,start
+
+"Fix Vim scrollback
+" http://www.shallowsky.com/linux/noaltscreen.html
+"set t_ti= t_te=
+
+" tabs, spaces and indenting
+set smarttab "Comment: This was added by steve (NO TABS!)
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set shiftround
+set smartindent
+set autoindent
+
+" Fix for inode-watchers like webpack
+set backupcopy=yes
+
+" Text
+set wrap
+set winwidth=79
+set formatoptions=qrn1
+set colorcolumn=+1
+
+" Line numbering
+set rnu
+
+" Menu
+set laststatus=2
+set wildmenu
+set wildmode=longest,list
+set showcmd
+set showmode
+
+" window settings
+set winwidth=79
+set showtabline=2
+
+" Search
+set hlsearch      " highlight matches
+set gdefault      " replace by line (default to)
+set ignorecase    " ignore case when searching
+set smartcase     " mix xase unless I
+set incsearch     " incremental
+set showmatch     " matching brackets
+
+" annoyances
+set noeb vb t_vb=
+set noerrorbells
+set novisualbell
+
+" temporary files
+set backup
+set undofile " persistent undo
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set undodir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" AUTOCMD
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup cmds
+    autocmd!
+    autocmd FileType text setlocal textwidth=78
+    au FileType gitcommit set spell
+
+    " Smarter line numbering
+    au InsertEnter * :set nu
+    au InsertLeave * :set rnu
+    "au FocusGained * :set rnu
+    "au FocusLost * :set nu
+
+
+    au InsertEnter * set list
+    au InsertLeave * set list!
+
+
+
+    " Color and highlighting
+    autocmd InsertEnter * match ExtraWhitespace //
+    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+    " markdown for .md files
+    autocmd BufNewFile,BufRead *.md set filetype=markdown
+
+    au bufwritepost .vimrc source $MYVIMRC
+augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" COLOR
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set t_Co=256
+set background=dark
+let g:solarized_termcolors=256
+colorscheme desert
+hi ExtraWhitespace ctermbg=yellow guibg=yellow
+hi ColorColumn ctermbg=lightgrey guibg=darkgrey
+hi SpecialKey ctermbg=None guibg=None
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" STATUS LINE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
+
